@@ -1,0 +1,159 @@
+﻿@model IEnumerable<EventEase.Models.Booking>
+
+@{
+    ViewData["Title"] = "All Bookings";
+}
+
+<h1 class="display-4 text-center mb-4">Event Bookings Overview</h1>
+
+<p class="text-center">
+    <a asp-action="Create" class="btn btn-primary btn-lg"><i class="bi bi-plus-circle me-2"></i>Create New Booking</a>
+</p>
+
+@* --- Advanced Filtering Form Section --- *@
+<div class="container mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm p-3">
+                <h5 class="card-title text-center mb-3">Advanced Booking Filters</h5>
+                <form asp-controller="Booking" asp-action="Index" method="get">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="searchString" class="form-label">Search (ID or Event Name):</label>
+                            <input type="text" name="searchString" id="searchString" class="form-control"
+                                   placeholder="Search by Booking ID or Event Name..."
+                                   value="@ViewData["CurrentSearchString"]">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="eventTypeId" class="form-label">Filter by Event Type:</label>
+                            <select name="eventTypeId" id="eventTypeId" class="form-control"
+                                    asp-items="@ViewBag.EventTypeIDFilter">
+                                <option value="">-- All Event Types --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="startDate" class="form-label">Start Date (on or after):</label>
+                            <input type="datetime-local" name="startDate" id="startDate" class="form-control"
+                                   value="@ViewData["CurrentStartDate"]" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="endDate" class="form-label">End Date (on or before):</label>
+                            <input type="datetime-local" name="endDate" id="endDate" class="form-control"
+                                   value="@ViewData["CurrentEndDate"]" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="venueAvailability" class="form-label">Venue Availability:</label>
+                            <select name="venueAvailability" id="venueAvailability" class="form-control" asp-items="@ViewBag.VenueAvailabilityFilter">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-start gap-2 mt-3">
+                        <button type="submit" class="btn btn-info"><i class="bi bi-funnel me-2"></i>Apply Filters</button>
+                        <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-x-circle me-2"></i>Clear Filters</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@* --- End Advanced Filtering Form Section --- *@
+
+<div class="container mt-4">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">No Bookings Found!</h4>
+            <p>It looks like there are no bookings yet or none match your current filter criteria.</p>
+            <hr>
+            <p class="mb-0">Try clearing filters or creating a new booking.</p>
+        </div>
+    }
+    else
+    {
+        <div class="d-none d-lg-block"> @* Desktop Table View *@
+            <table class="table table-hover table-striped shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Venue</th>
+                        <th>Event Name</th>
+                        <th>Event Type</th> @* NEW COLUMN *@
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Booked On</th>
+                        <th>Venue Avail.</th> @* NEW COLUMN *@
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.BookingID)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Venue!.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Event!.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Event!.EventType!.Name)</td> @* DISPLAY EVENT TYPE *@
+                            <td>@item.StartDate.ToString("dd MMM yyyy HH:mm")</td>
+                            <td>@item.EndDate.ToString("dd MMM yyyy HH:mm")</td>
+                            <td>
+                                <span class="badge @(item.Status == "Confirmed" ? "bg-success" : item.Status == "Pending" ? "bg-warning text-dark" : "bg-danger")">
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </span>
+                            </td>
+                            <td>@item.BookingDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                            @Html.Raw(item.Venue?.IsAvailable == true ?
+                            "<span class='badge bg-success'>Available</span>" :
+                            "<span class='badge bg-danger'>Not Available</span>")
+                           </td>
+                            <td class="text-end">
+                                <a asp-action="Details" asp-route-id="@item.BookingID" class="btn btn-info btn-sm me-1" title="Details"><i class="bi bi-eye"></i></a>
+                                <a asp-action="Edit" asp-route-id="@item.BookingID" class="btn btn-warning btn-sm me-1" title="Edit"><i class="bi bi-pencil"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.BookingID" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-lg-none"> @* Mobile Card View *@
+            <div class="row row-cols-1 g-3">
+                @foreach (var item in Model)
+                {
+                    <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Booking ID: @Html.DisplayFor(modelItem => item.BookingID)</h5>
+                                <p class="card-text mb-1">
+                                    <strong>Venue:</strong> @Html.DisplayFor(modelItem => item.Venue!.Name)
+                                    <br /><small class="text-muted">Availability: @(item.Venue?.IsAvailable == true ? "Available" : "Not Available")</small> @* DISPLAY VENUE AVAILABILITY *@
+                                </p>
+                                <p class="card-text mb-1">
+                                    <strong>Event:</strong> @Html.DisplayFor(modelItem => item.Event!.Name)
+                                    <br /><small class="text-muted">Type: @Html.DisplayFor(modelItem => item.Event!.EventType!.Name)</small> @* DISPLAY EVENT TYPE *@
+                                </p>
+                                <p class="card-text mb-1">
+                                    <strong>Dates:</strong> @item.StartDate.ToString("dd MMM yy HH:mm") - @item.EndDate.ToString("dd MMM yy HH:mm")
+                                </p>
+                                <p class="card-text mb-2">
+                                    <strong>Status:</strong>
+                                    <span class="badge @(item.Status == "Confirmed" ? "bg-success" : item.Status == "Pending" ? "bg-warning text-dark" : "bg-danger")">
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="card-footer bg-light border-top d-flex justify-content-end">
+                                <a asp-action="Details" asp-route-id="@item.BookingID" class="btn btn-info btn-sm me-1"><i class="bi bi-eye"></i> Details</a>
+                                <a asp-action="Edit" asp-route-id="@item.BookingID" class="btn btn-warning btn-sm me-1"><i class="bi bi-pencil"></i> Edit</a>
+                                <a asp-action="Delete" asp-route-id="@item.BookingID" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

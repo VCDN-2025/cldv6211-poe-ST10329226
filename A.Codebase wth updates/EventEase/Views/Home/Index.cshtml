@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Welcome to EventEase"; // Keep your specific title
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to EventEase!</h1>
+    <p>Your one-stop platform for managing your events.</p>
+</div>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Navigate EventEase Sections</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="list-group">
+                <a asp-controller="Venues" asp-action="Index" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">Browse Venues</h5>
+                    <p class="mb-1 text-muted">Discover and explore available event venues.</p>
+                </a>
+
+                <a asp-controller="Events" asp-action="Index" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">Manage Events</h5>
+                    <p class="mb-1 text-muted">Create, edit, and oversee your events.</p>
+                </a>
+
+                <a asp-controller="Booking" asp-action="Index" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">View All Bookings</h5>
+                    <p class="mb-1 text-muted">See a list of all event bookings.</p>
+                </a>
+
+                <a asp-controller="Venues" asp-action="Create" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">Create New Venue</h5>
+                    <p class="mb-1 text-muted">Add a new venue to the system.</p>
+                </a>
+
+                <a asp-controller="Events" asp-action="Create" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">Create New Event</h5>
+                    <p class="mb-1 text-muted">Add a new event to the system.</p>
+                </a>
+
+                <a asp-controller="Booking" asp-action="Create" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">Create New Booking</h5>
+                    <p class="mb-1 text-muted">Make a new booking for a venue and event.</p>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-5">
+    <p>Learn more about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

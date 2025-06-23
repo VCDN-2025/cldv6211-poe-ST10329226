@@ -1,0 +1,82 @@
+﻿@model EventEase.Models.Booking
+
+@{
+    ViewData["Title"] = "Booking Details: " + Model.BookingID;
+}
+
+<h1 class="display-5 text-center mb-4 text-primary">Booking Details: **@Model.BookingID**</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg p-4">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Booking Information</h4>
+                <hr class="mb-4" />
+                <dl class="row">
+                    <dt class="col-sm-4 text-muted">
+                        <i class="bi bi-hash me-2"></i>@Html.DisplayNameFor(model => model.BookingID)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.BookingID)
+                    </dd>
+
+                    <dt class="col-sm-4 text-muted">
+                        <i class="bi bi-geo-alt-fill me-2"></i>@Html.DisplayNameFor(model => model.Venue)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Venue!.Name) (@Html.DisplayFor(model => model.Venue!.Location))
+                        @if (Model.Venue != null)
+                        {
+                            <span class="text-muted small">(Availability: @(Model.Venue.IsAvailable ? "Available" : "Not Available"))</span> @* DISPLAY VENUE AVAILABILITY *@
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4 text-muted">
+                        <i class="bi bi-calendar-event me-2"></i>@Html.DisplayNameFor(model => model.Event)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Event!.Name)
+                        @if (Model.Event?.EventType != null)
+                        {
+                            <span class="text-muted small">(Type: @Html.DisplayFor(model => model.Event.EventType.Name))</span> @* DISPLAY EVENT TYPE *@
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4 text-muted">
+                        <i class="bi bi-clock-fill me-2"></i>@Html.DisplayNameFor(model => model.StartDate)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.StartDate.ToString("dd MMM yyyy HH:mm")
+                    </dd>
+
+                    <dt class="col-sm-4 text-muted">
+                        <i class="bi bi-clock-fill me-2"></i>@Html.DisplayNameFor(model => model.EndDate)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.EndDate.ToString("dd MMM yyyy HH:mm")
+                    </dd>
+
+                    <dt class="col-sm-4 text-muted">
+                        <i class="bi bi-calendar-check me-2"></i>@Html.DisplayNameFor(model => model.BookingDate)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.BookingDate.ToString("dd MMM yyyy HH:mm")
+                    </dd>
+
+                    <dt class="col-sm-4 text-muted">
+                        <i class="bi bi-info-circle-fill me-2"></i>@Html.DisplayNameFor(model => model.Status)
+                    </dt>
+                    <dd class="col-sm-8">
+                        <span class="badge fs-6 @(Model.Status == "Confirmed" ? "bg-success" : Model.Status == "Pending" ? "bg-warning text-dark" : "bg-danger")">
+                            @Html.DisplayFor(model => model.Status)
+                        </span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="card-footer text-center bg-light">
+                <a asp-action="Edit" asp-route-id="@Model.BookingID" class="btn btn-warning me-2"><i class="bi bi-pencil-fill me-2"></i>Edit</a>
+                <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left-circle-fill me-2"></i>Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

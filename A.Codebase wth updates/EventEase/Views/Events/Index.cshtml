@@ -1,0 +1,69 @@
+﻿@model IEnumerable<EventEase.Models.Event>
+
+@{
+    ViewData["Title"] = "All Events";
+}
+
+<h1 class="display-4 text-center mb-4">Event Listings</h1>
+
+<p class="text-center">
+    <a asp-action="Create" class="btn btn-primary btn-lg">Create New Event</a>
+</p>
+
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm p-3">
+                <form asp-controller="Events" asp-action="Index" method="get">
+                    <div class="form-group">
+                        <label for="eventTypeId" class="form-label">Filter by Event Type:</label>
+                        <select name="eventTypeId" id="eventTypeId" class="form-control"
+                                asp-items="@ViewBag.EventTypeID">
+                            <option value="">-- All Event Types --</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-start gap-2 mt-3">
+                        <button type="submit" class="btn btn-info">Apply Filter</button>
+                        <a asp-action="Index" class="btn btn-secondary">Clear Filter</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="list-group">
+                @foreach (var item in Model)
+                {
+                    <div class="list-group-item flex-column align-items-start mb-2 shadow-sm">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">@Html.DisplayFor(modelItem => item.Name)</h5>
+                            <small class="text-muted">Event ID: @Html.DisplayFor(modelItem => item.EventID)</small>
+                        </div>
+                        <p class="mb-1">@Html.DisplayFor(modelItem => item.Description)</p>
+
+                      
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small class="text-muted"><strong>Type:</strong> @Html.DisplayFor(modelItem => item.EventType.Name)</small>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <small class="text-muted"><strong>Venue:</strong> @Html.DisplayFor(modelItem => item.Venue.Name)</small>
+                            </div>
+                        </div>
+                       
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <a asp-action="Details" asp-route-id="@item.EventID" class="btn btn-info btn-sm me-2">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.EventID" class="btn btn-warning btn-sm me-2">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.EventID" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

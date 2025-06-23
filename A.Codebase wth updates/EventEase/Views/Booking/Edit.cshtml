@@ -1,0 +1,65 @@
+﻿@model EventEase.Models.Booking
+
+@{
+    ViewData["Title"] = "Edit Booking: " + Model.BookingID;
+}
+
+<h1 class="display-5 text-center mb-4 text-primary">Edit Booking: **@Model.BookingID**</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm p-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="All" class="alert alert-danger mb-4" role="alert"></div>
+                <input type="hidden" asp-for="BookingID" /> @* Keep BookingID hidden for update *@
+                <input type="hidden" asp-for="BookingDate" /> @* Keep original BookingDate hidden *@
+
+                <div class="mb-3">
+                    <label asp-for="VenueID" class="form-label">Venue</label>
+                    <select asp-for="VenueID" class="form-select" asp-items="ViewBag.VenueID"></select>
+                    <span asp-validation-for="VenueID" class="text-danger mt-1 d-block"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="EventID" class="form-label">Event</label>
+                    <select asp-for="EventID" class="form-select" asp-items="ViewBag.EventID"></select>
+                    <span asp-validation-for="EventID" class="text-danger mt-1 d-block"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="StartDate" class="form-label">Start Date & Time</label>
+                        <input asp-for="StartDate" class="form-control" type="datetime-local" />
+                        <span asp-validation-for="StartDate" class="text-danger mt-1 d-block"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="EndDate" class="form-label">End Date & Time</label>
+                        <input asp-for="EndDate" class="form-control" type="datetime-local" />
+                        <span asp-validation-for="EndDate" class="text-danger mt-1 d-block"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Status" class="form-label">Booking Status</label>
+                    <select asp-for="Status" class="form-select">
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger mt-1 d-block"></span>
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-save me-2"></i>Save Changes</button>
+                    <a asp-action="Index" class="btn btn-secondary mt-2"><i class="bi bi-arrow-left-circle me-2"></i>Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
