@@ -1,99 +1,145 @@
-# CLDV6211 Project - [Your Project Name/Purpose]
+EventEase: Online Venue Booking System
+Project Description
+EventEase is an innovative event management company that requires an efficient, user-friendly online booking platform to streamline its operations. This application aims to simplify venue management, prevent booking conflicts, provide a clear view of scheduled events, and enable booking specialists to manage bookings effectively.
 
-## Student Information
-* **Student Number:** ST10329226
-* **Name:** [Your Full Name Here]
-* **Module:** CLDV6211 - Cloud Development
+This platform is developed as an administrative tool for booking specialists. Customers can request bookings via external channels (email, phone, walk-in), and specialists use this system to facilitate and manage those bookings. The system accounts for scenarios where events may be planned and loaded before a venue becomes available for booking.
 
-## Project Description
-[Provide a clear and concise description of your project. What does it do? What problem does it solve? What are its main features? What is its overall goal for the CLDV6211 module?]
+Features
+The EventEase application provides the following key functionalities:
 
-*Example:*
-This project serves as the Practical Online Examination (POE) submission for the CLDV6211 module. It is a [type of application, e.g., web application, API, desktop app] designed to [briefly explain its core function, e.g., manage user accounts, display product information, process orders]. It demonstrates the application of cloud development principles and technologies learned throughout the module.
+Comprehensive Venue Management (CRUD):
 
-## Technologies Used
-* **Primary Language(s):** [e.g., C#, Python, JavaScript]
-* **Frameworks/Libraries:** [e.g., ASP.NET Core, React, Node.js, Express, Flask, Django, Entity Framework]
-* **Database:** [e.g., SQL Server, MySQL, PostgreSQL, MongoDB, Azure SQL Database]
-* **Cloud Platform:** [e.g., Microsoft Azure, AWS, Google Cloud Platform]
-* **Other Tools:** [e.g., Visual Studio, VS Code, Git, Docker]
+Create, Read, Update, Delete (CRUD) operations for venue information (name, location, capacity, image URL, availability status).
 
-## Features
-* [List key features or functionalities of your application. Use bullet points for readability.]
-    * User Authentication (Login, Register)
-    * CRUD operations for [e.g., products, orders, users]
-    * [Specific feature 3]
-    * [Specific feature 4]
-    * Integration with [e.g., Azure Blob Storage, Azure Functions, SendGrid]
+Venue Availability Tracking: A boolean field (IsAvailable) on venues to denote their current booking status.
 
-## Installation and Setup
+Deletion Restriction: Prevents deletion of venues if they have active bookings associated with them, ensuring data integrity.
 
-### Prerequisites
-* [List any software or tools required before running the project, e.g., .NET SDK 6.0, Node.js 16+, Python 3.9+, Docker Desktop]
-* [Database connection details/setup (if applicable)]
-* [Azure/Cloud credentials and service principles (if directly deploying from local)]
+Image Uploads: Integrates with Azure Blob Storage for secure and scalable storage of venue images.
 
-### Steps to Run Locally
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/VCDN-2025/cldv6211-poe-ST10329226.git](https://github.com/VCDN-2025/cldv6211-poe-ST10329226.git)
-    ```
-2.  **Navigate to the project directory:**
-    ```bash
-    cd cldv6211-poe-ST10329226
-    ```
-3.  **Install dependencies:**
-    * [If it's a .NET project]:
-        ```bash
-        dotnet restore
-        ```
-    * [If it's a Node.js project]:
-        ```bash
-        npm install
-        # OR
-        yarn install
-        ```
-    * [If it's a Python project]:
-        ```bash
-        pip install -r requirements.txt
-        ```
-    * [Include any database migration steps, e.g., Entity Framework Migrations]:
-        ```bash
-        dotnet ef database update
-        ```
-4.  **Configure Environment Variables (if any):**
-    [Explain how to set up necessary environment variables, e.g., database connection strings, API keys. Often, this involves a `.env` file or `appsettings.json`.]
+Robust Event Management (CRUD):
 
-5.  **Run the application:**
-    * [For .NET web app]:
-        ```bash
-        dotnet run
-        ```
-    * [For Node.js app]:
-        ```bash
-        npm start
-        # OR
-        node server.js
-        ```
-    * [For Python Flask/Django]:
-        ```bash
-        flask run
-        # OR
-        python manage.py runserver
-        ```
-    * [Indicate the URL where the application will be accessible, e.g., `http://localhost:5000` or `http://localhost:3000`]
+Create, Read, Update, Delete (CRUD) operations for event information (name, description, associated venue, and event type).
 
-## Deployment
-[Briefly explain how the project is deployed to the cloud. This could be a summary, or you might reference a separate deployment guide if it's complex.]
-* Deployed to: [e.g., Azure App Service, Azure Functions, Azure Kubernetes Service]
-* Deployment Method: [e.g., Azure DevOps CI/CD pipeline, GitHub Actions, manual deployment via VS/Azure Portal]
-* Live URL (if applicable): [e.g., `https://your-app-name.azurewebsites.net`]
+Event Type Classification: Events are categorized using predefined event types (e.g., Concert, Conference) for better organization and filtering.
 
-## Usage
-[Explain how to use the application once it's running. Provide simple steps or scenarios.]
-* Log in with: `username: admin@example.com`, `password: Password123!` (if using default credentials)
-* Navigate to the `/products` page to view items.
-* Use the "Add New" button to create a new entry.
+Deletion Restriction: Prevents deletion of events if they have active bookings associated with them.
 
-## Project Structure
-[Give a high-level overview of the main folders and files.]
+Streamlined Booking Management (CRUD with Advanced Features):
+
+Create, Read, Update, Delete (CRUD) operations for customer bookings.
+
+Double-Booking Prevention: Implements server-side validation to prevent overlapping bookings for the same venue on conflicting dates and times.
+
+Basic Search: Allows searching bookings by BookingID or Event Name.
+
+Advanced Filtering:
+
+Filter bookings by Event Type.
+
+Filter bookings by a custom Date Range.
+
+Filter bookings based on the associated Venue's Availability.
+
+Intuitive User Interface:
+
+Built with Bootstrap for a responsive and consistent design across various devices (desktop, tablet, mobile).
+
+Provides clear success and error messages using TempData for enhanced user experience.
+
+Technologies Used
+The EventEase application is built using the following technologies and Azure services:
+
+Backend:
+
+ASP.NET Core MVC: A cross-platform, high-performance, open-source framework for building modern, cloud-based, Internet-connected applications.
+
+C#: The primary programming language used for all backend logic and application development.
+
+Entity Framework Core (EF Core): An Object-Relational Mapper (ORM) that simplifies data access and management with the Azure SQL Database through LINQ queries and migrations.
+
+Frontend:
+
+HTML5: For structuring the web content.
+
+CSS3: For styling and visual presentation.
+
+Bootstrap: A popular CSS framework for responsive and mobile-first frontend development.
+
+JavaScript: For client-side interactivity and dynamic elements.
+
+Cloud Services (Microsoft Azure):
+
+Azure App Service: Platform-as-a-Service (PaaS) for hosting the web application, providing easy deployment, scalability, and managed infrastructure.
+
+Azure SQL Database: A fully managed relational database service in the cloud for storing all application data (venues, events, bookings, event types).
+
+Azure Storage (Blob Storage): Used for scalable and cost-effective storage and management of venue images.
+
+Setup and Installation (Local Development)
+To run this project locally, follow these steps:
+
+Prerequisites:
+
+.NET SDK (latest stable version recommended, compatible with ASP.NET Core).
+
+Visual Studio (Community Edition or higher).
+
+Local SQL Server (for development database) or access to Azure SQL Database.
+
+Git (for cloning the repository).
+
+Clone the Repository:
+
+git clone https://github.com/VCDN-2025/cldv6211-poe-ST10329226.git
+cd cldv6211-poe-ST10329226
+
+Configure Database:
+
+Open the solution (EventEase.sln) in Visual Studio.
+
+Update the DefaultConnection string in appsettings.json (and appsettings.Development.json) to point to your local SQL Server instance or your Azure SQL Database.
+
+"ConnectionStrings": {
+  "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=EventEaseDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+  // Or your Azure SQL connection string
+}
+
+Open Package Manager Console in Visual Studio.
+
+Run database migrations to create/update the database schema:
+
+Update-Database
+
+(Ensure you have at least one Venue record in your database before running this, as the migration assigns a default VenueID to existing Events).
+
+Configure Azure Blob Storage (if implementing image uploads locally):
+
+Add your Azure Storage connection string to appsettings.json.
+
+Uncomment the Blob Storage code in VenuesController.cs if you intend to use it locally.
+
+Run the Application:
+
+In Visual Studio, press F5 or click Debug > Start Debugging.
+
+The application should open in your default browser.
+
+Deployment to Azure
+This application is designed for deployment to Microsoft Azure:
+
+Azure App Service: The web application is deployed as an Azure App Service.
+
+Azure SQL Database: The database is hosted on Azure SQL Database.
+
+Azure Blob Storage: Venue images are stored in Azure Blob Storage.
+
+Deployment can be performed directly from Visual Studio using its built-in Publish wizard, selecting "Azure App Service (Windows)" as the target and ensuring the chosen App Service Plan SKU (e.g., Basic, Shared) complies with any Azure Policies in the subscription.
+
+Contributing
+Contributions are not expected for this academic project. However, in a real-world scenario, you would typically fork the repository, create a feature branch, commit your changes, and submit a pull request.
+
+License
+This project is for academic purposes and is not openly licensed for commercial use. For specific licensing details, please refer to any internal project documentation or contact the project owner.
+
+Note: This README provides a general overview. For detailed instructions on specific features or advanced configurations, please refer to the project's internal documentation and code comments.
